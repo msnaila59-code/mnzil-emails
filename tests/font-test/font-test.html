@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Font test</title>
+<!-- Same @font-face as the offer email. -->
+<style>
+@font-face{font-family:'Mnzil Equilibra';font-style:normal;font-weight:600;src:url(https://framerusercontent.com/assets/wHbHavzcoe4zolzHJupOeRPy6u4.woff2) format('woff2')}
+</style>
+</head>
+<body style="margin:0;padding:0;background:#FFFFFF;">
+<!-- Proof test: each line asks for the brand font and, if it can't load, falls back to a typewriter font that looks
+     nothing like it. Typewriter letters = the brand font did NOT load in this mail app. -->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+<tr><td style="padding:24px 20px;font-family:-apple-system,'Segoe UI',Tahoma,Arial,sans-serif;color:#1E225E;">
+
+  <div dir="rtl" style="font-size:16px;line-height:26px;text-align:right;">١) هذا شكل خطنا الحقيقي (صورة):</div>
+  <div style="padding:8px 0 24px 0;"><img src="https://msnaila59-code.github.io/mnzil-emails/tests/font-test/our-font.png" width="470" height="40" alt="Mnzil 4821 · Your offer is ready!" style="display:block;width:470px;max-width:100%;height:auto;border:0;"></div>
+
+  <div dir="rtl" style="font-size:16px;line-height:26px;text-align:right;">٢) هذا السطر نص يطلب خطنا. إذا ما انحمّل الخط يطلع بخط الآلة الكاتبة:</div>
+  <div style="padding:8px 0 24px 0;font-family:'Mnzil Equilibra','Courier New',Courier,monospace;font-weight:600;font-size:28px;line-height:40px;color:#2446ED;white-space:nowrap;">Mnzil 4821 · Your offer is ready!</div>
+
+  <div dir="rtl" style="font-size:16px;line-height:26px;text-align:right;">٣) نفس السطر بس يطلب الخط لو كان منزّل على الجهاز نفسه:</div>
+  <div style="padding:8px 0 24px 0;font-family:'HT Equilibra A','Courier New',Courier,monospace;font-weight:600;font-size:28px;line-height:40px;color:#2446ED;white-space:nowrap;">Mnzil 4821 · Your offer is ready!</div>
+
+  <div dir="rtl" style="font-size:16px;line-height:26px;text-align:right;">٤) هذا خط الجهاز (اللي يطلع في الإيميل لما خطنا ما ينحمّل):</div>
+  <div style="padding:8px 0 0 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',sans-serif;font-weight:600;font-size:28px;line-height:40px;color:#2446ED;white-space:nowrap;">Mnzil 4821 · Your offer is ready!</div>
+
+</td></tr>
+</table>
+</body>
+</html>
