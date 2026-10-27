@@ -28,6 +28,32 @@ These are the Mnzil app emails, built from the Figma design so they work in a re
 - The font stack also names `'HT Equilibra A'`, the installed family name, so any computer that has the brand font installed shows it even in Gmail. That's why a build that names the font looks right in Gmail on the design team's own computers. Customers don't have the font installed, so Gmail shows them the system font.
 - The brand font and its swash show in Apple Mail, iPhone/iPad Mail, Outlook for Mac and Samsung Mail. **Gmail never loads web fonts for any sender**, so there the text is in the system font with no swash. The only way to get the swash in Gmail is to make those words images, and that was decided against: the text stays real text. Don't fake it with kashida (ـ): that was tried and rejected.
 
+## Fallback font: why Gmail still looks close to HT Equilibra
+
+Gmail (and any client that can't load the brand font) moves down the `font-family` list and uses the first font the device actually has. **The order of that list decides whether the email looks like the brand or looks old.** This is the stack used here:
+
+```css
+font-family: 'Mnzil Equilibra', 'HT Equilibra A', -apple-system, BlinkMacSystemFont, 'SF Arabic', 'Segoe UI', 'Noto Sans Arabic', Tahoma, Arial, sans-serif;
+```
+
+| Position | Font | Who gets it |
+|---|---|---|
+| 1 | `'Mnzil Equilibra'` (`@font-face`, mnzil.com's files) | Apple Mail, iPhone/iPad Mail, Outlook for Mac, Samsung Mail. The exact brand font with swash. |
+| 2 | `'HT Equilibra A'` | Any device with the brand font installed (the design team's Macs), even in Gmail. |
+| 3 | `-apple-system`, `BlinkMacSystemFont`, `'SF Arabic'` | Gmail on iPhone and Mac: Apple's own SF Arabic + SF Pro. A modern, clean, low-contrast sans that sits very close to HT Equilibra. This is why the email still "looks like our font" in Gmail on an iPhone. |
+| 4 | `'Segoe UI'` | Gmail on Windows: Microsoft's modern sans, with Arabic. |
+| 5 | `'Noto Sans Arabic'` | Gmail on Android: Google's modern Arabic sans (Roboto for Latin). |
+| 6 | `Tahoma`, `Arial` | Last resort only. |
+
+**The common mistake:** a stack like `'HT Equilibra A', Tahoma, Arial, sans-serif`. iPhones don't have Tahoma, and Arial has no Arabic letters, so iOS falls back to an older calligraphic-style Arabic system font. The Arabic then looks old and heavy next to the design. Putting the system fonts (`-apple-system` …) **before** Tahoma/Arial fixes that on Apple devices, and `Segoe UI` / `Noto Sans Arabic` do the same on Windows and Android.
+
+Also keep these, so the fallback keeps the design's rhythm:
+- **Line heights in px** (from Figma), never `normal`. Spacing then stays identical whatever font is drawn.
+- **Real weights** (`400`, `500`, `600`, `800`), so the system fonts pick their matching medium, semibold and heavy faces.
+- **No swash in the fallback.** System fonts have no `swsh`, so «حلك / الأول / العاملين / العمال / العرض» show plain there. Only images can carry the swash into Gmail.
+
+To check a change, open the email in the **Gmail app on an iPhone and on an Android phone**, not only on a computer that has the brand font installed. Those computers show the real font even in Gmail and hide the problem.
+
 ## Button arrow
 
 `btn-arrow.gif` is the Figma arrow in a white circle. It nudges forward (left, because the email is RTL) and glides back, on a loop, like the arrows in Mnzil's other emails. Rebuild it with `python3 tools/arrow_gif.py <out_dir>`.
